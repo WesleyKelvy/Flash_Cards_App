@@ -27,9 +27,12 @@ export class WordController {
 
   @Delete(':id')
   deleteWordbyId(
-    @Param('id', ParseIntPipe) wordId: number,
+    @Param('id', ParseIntPipe)
+    wordId: number,
   ) {
     console.log({ wordId });
-    return this.wordService.deleteWordbyId(wordId);
+    return this.wordService.deleteWordbyId(
+      wordId,
+    );
   }
 }

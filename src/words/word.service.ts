@@ -2,7 +2,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { User, Words } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { WordDto } from './dto';
 
