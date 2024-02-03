@@ -10,18 +10,32 @@ export class WordService {
   constructor(private prisma: PrismaService) {}
 
   async getAllWords() {
-    const getAllWords =
-      await this.prisma.words.findMany();
-    return getAllWords.map((word) => word.text);
+    try {
+      const allWords =
+        await this.prisma.words.findMany();
+
+      if (!allWords) {
+        throw new NotFoundException(
+          'Empty database!',
+        );
+      }
+      return allWords.map((word) => word.text);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async addWord(dto: WordDto) {
-    if (dto.word) {
+    if (!dto.word) {
+      throw new NotFoundException(
+        'Empty database!',
+      );
     }
     const newWord =
       await this.prisma.words.create({
         data: {
           text: dto.word,
+          deck: { connect: { id: dto.deckId } },
         },
       });
     return newWord;

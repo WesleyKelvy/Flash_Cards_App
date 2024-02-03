@@ -3,4 +3,5 @@
 export class WordDto {
   word: string;
   id?: number;
+  deckId: number;
 }

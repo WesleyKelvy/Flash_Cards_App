@@ -10,14 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Words {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  text String
-}
-
 model User {
   id        Int      @id @default(autoincrement())
   updatedAt DateTime @updatedAt
@@ -27,5 +19,30 @@ model User {
   hash  String
 
   firstName String?
-  lastName String?
+  lastName  String?
+}
+
+model Deck {
+  id        Int      @id @default(autoincrement())
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  name String
+
+  words Words[]
+
+  @@map("deck")
+}
+
+model Words {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  text String
+
+  deck   Deck @relation(fields: [deckId], references: [id])
+  deckId Int
+
+  @@map("words")
 }
